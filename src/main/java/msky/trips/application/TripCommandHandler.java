@@ -1,9 +1,7 @@
 package msky.trips.application;
 
 import lombok.RequiredArgsConstructor;
-import msky.trips.domain.CreateTripCommand;
-import msky.trips.domain.Trip;
-import msky.trips.domain.TripCreated;
+import msky.trips.domain.*;
 
 @RequiredArgsConstructor
 public class TripCommandHandler {
@@ -19,5 +17,13 @@ public class TripCommandHandler {
         repository.save(newTrip);
 
         events.publish(tripCreated);
+    }
+
+    public void handle(ChangeTripDurationCommand command) {
+        Trip trip = repository.load(command.tripGUID());
+        trip.apply(new DurationOfTripChanged(command.tripGUID(), command.startDate(), command.endDate()));
+
+        repository.save(trip);
+        trip.getUncommittedEvents().forEach(events::publish);
     }
 }

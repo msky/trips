@@ -1,12 +1,12 @@
 package msky.trips.application;
 
 import msky.trips.query.TripOverviewProjection;
-import msky.trips.query.TripProjectionRepository;
+import msky.trips.query.TripOverviewRepository;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class InMemoryTripProjectionsRepository implements TripProjectionRepository {
+public class InMemoryTripOverviewRepository implements TripOverviewRepository {
     private final Map<String, TripOverviewProjection> tripsOverviews = new HashMap<>();
 
     @Override

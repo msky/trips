@@ -1,6 +1,6 @@
 package msky.trips.query;
 
-public interface TripProjectionRepository {
+public interface TripOverviewRepository {
     void insert(TripOverviewProjection newTripOverview);
 
     TripOverviewProjection getOverviewFor(String tripGUID);

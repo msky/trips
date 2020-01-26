@@ -14,4 +14,11 @@ public class InMemoryTripRepository implements TripRepository {
     public void save(Trip trip) {
         events.addAll(trip.getUncommittedEvents());
     }
+
+    @Override
+    public Trip load(String tripGUID) {
+        Trip trip = new Trip();
+        events.forEach(event -> event.applyOn(trip));
+        return trip;
+    }
 }

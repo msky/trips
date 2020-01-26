@@ -5,9 +5,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class TripQueryHandler {
 
-    private final TripProjectionRepository repository;
+    private final TripOverviewRepository overviewRepository;
+    private final TripDetailsRepository detailsRepository;
 
     public TripOverviewProjection handle(ReadTripQuery query) {
-        return repository.getOverviewFor(query.tripGUID());
+        return overviewRepository.getOverviewFor(query.tripGUID());
+    }
+
+    public TripDetailsProjection handle(ReadTripDetailsQuery query) {
+        return detailsRepository.load(query.tripGUID());
     }
 }
