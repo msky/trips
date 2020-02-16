@@ -1,12 +1,12 @@
 package msky.trips.query;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
+
+import static java.util.Collections.emptyList;
 
 @RequiredArgsConstructor
 @AllArgsConstructor
@@ -19,4 +19,7 @@ public class TripDetailsProjection {
 
     private LocalDate startDate;
     private LocalDate endDate;
+
+    @Singular
+    private List<AttractionProjection> wantToSeeAttractions = emptyList();
 }

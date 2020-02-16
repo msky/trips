@@ -26,4 +26,20 @@ public class TripCommandHandler {
         repository.save(trip);
         trip.getUncommittedEvents().forEach(events::publish);
     }
+
+    public void handle(AddNewAttractionCommand command) {
+        Trip trip = repository.load(command.tripGUID());
+        trip.apply(new NewAttractionAddedEvent(
+                command.tripGUID(),
+                command.attractionGUID(),
+                command.name(),
+                command.latCoordinate(),
+                command.longCoordinate(),
+                command.estimatedArrivalTime(),
+                command.estimatedHoursSpent())
+        );
+
+        repository.save(trip);
+        trip.getUncommittedEvents().forEach(events::publish);
+    }
 }

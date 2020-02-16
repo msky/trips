@@ -2,11 +2,9 @@ package msky.trips.application;
 
 import lombok.RequiredArgsConstructor;
 import msky.trips.domain.DurationOfTripChanged;
+import msky.trips.domain.NewAttractionAddedEvent;
 import msky.trips.domain.TripCreated;
-import msky.trips.query.TripDetailsProjection;
-import msky.trips.query.TripDetailsRepository;
-import msky.trips.query.TripOverviewProjection;
-import msky.trips.query.TripOverviewRepository;
+import msky.trips.query.*;
 
 @RequiredArgsConstructor
 public class TripEventListener {
@@ -24,6 +22,19 @@ public class TripEventListener {
         TripDetailsProjection updatedDetails = tripDetails.toBuilder()
                 .startDate(event.startDate())
                 .endDate(event.endDate())
+                .build();
+        detailsRepository.update(updatedDetails);
+    }
+
+    public void handle(NewAttractionAddedEvent event) {
+        TripDetailsProjection tripDetails = detailsRepository.load(event.tripGUID());
+        TripDetailsProjection updatedDetails = tripDetails.toBuilder().wantToSeeAttraction(new AttractionProjection(
+                event.attractionGUID(),
+                event.name(),
+                event.latCoordinate(),
+                event.longCoordinate(),
+                event.estimatedArrivalTime(),
+                event.estimatedHoursSpent()))
                 .build();
         detailsRepository.update(updatedDetails);
     }
