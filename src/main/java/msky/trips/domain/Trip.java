@@ -10,7 +10,7 @@ public class Trip extends Aggregate {
     private Attractions wantToSeeAttractions = new Attractions();
     private Duration duration = new Duration();
 
-    public void apply(TripCreated event) {
+    public void apply(TripCreatedEvent event) {
         this.ownerId = event.ownerId();
         this.tripName = event.tripName();
         this.tripGUID = event.tripGUID();
@@ -18,7 +18,7 @@ public class Trip extends Aggregate {
         this.register(event);
     }
 
-    public void apply(DurationOfTripChanged durationOfTripChanged) {
+    public void apply(DurationOfTripChangedEvent durationOfTripChanged) {
         duration.changeTo(durationOfTripChanged.startDate(), durationOfTripChanged.endDate());
 
         this.register(durationOfTripChanged);

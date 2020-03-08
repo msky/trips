@@ -3,7 +3,7 @@ package msky.trips.domain;
 import lombok.Value;
 
 @Value
-public class TripCreated implements Event {
+public class TripCreatedEvent implements Event {
     private String ownerId;
     private String tripName;
     private String tripGUID;
